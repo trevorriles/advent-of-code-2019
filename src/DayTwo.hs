@@ -7,7 +7,7 @@ import Control.Lens
 
 solve :: IO ()
 solve = do
-    input <- readFile "./day-two-input.txt"
+    input <- readFile "./src/day-two-input.txt"
     let codes = read @Int <$> splitOn "," input
     let codes' = codes & element 1 .~ 12 & element 2 .~ 2
     putStrLn $ show $ compute codes' 0
@@ -27,11 +27,12 @@ compute input pos = do
             let in2 = input ^?! element (input ^?! element (pos + 2))
             let out = input ^?! element (pos + 3)
             compute (input & element out .~ (in1 * in2)) (pos + 4)
+        _ -> error "Bad input"
 
 
 solve2 :: Int -> Int -> IO ()
 solve2 noun verb = do
-    input <- readFile "./day-two-input.txt"
+    input <- readFile "./src/day-two-input.txt"
     let codes = read @Int <$> splitOn "," input
     let codes' = codes & element 1 .~ noun & element 2 .~ verb
     let output = compute codes' 0 ^?! element 0
