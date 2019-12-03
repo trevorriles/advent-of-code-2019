@@ -76,7 +76,7 @@ addCoords2 state (Instruction _ 0) = state
 addCoords2 (steps, (x, y), state) (Instruction d n) = do 
     let newSteps = steps + 1
     case d of
-        U -> addCoords2 (newSteps, (x, y + 1), M.insert (x, y + 1) (newSteps) state) (Instruction d $ n - 1)
-        D -> addCoords2 (newSteps, (x, y - 1), M.insert (x, y - 1) (newSteps) state) (Instruction d $ n - 1)
-        R -> addCoords2 (newSteps, (x + 1, y), M.insert (x + 1, y) (newSteps) state) (Instruction d $ n - 1)
-        L -> addCoords2 (newSteps, (x - 1, y), M.insert (x - 1, y) (newSteps) state) (Instruction d $ n - 1)
+        U -> addCoords2 (newSteps, (x, y + 1), M.insertWith (flip const) (x, y + 1) (newSteps) state) (Instruction d $ n - 1)
+        D -> addCoords2 (newSteps, (x, y - 1), M.insertWith (flip const) (x, y - 1) (newSteps) state) (Instruction d $ n - 1)
+        R -> addCoords2 (newSteps, (x + 1, y), M.insertWith (flip const) (x + 1, y) (newSteps) state) (Instruction d $ n - 1)
+        L -> addCoords2 (newSteps, (x - 1, y), M.insertWith (flip const) (x - 1, y) (newSteps) state) (Instruction d $ n - 1)
